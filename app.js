@@ -1,17 +1,10 @@
-// var express = require('express')
-var Sequelize = require('sequelize')
+const express = require('express')
+const bodyParser = require('body-parser')
 
-var sequelize = new Sequelize('test', 'root', '', {
-  host: 'localhost',
-  port: 3306,
-  dialect: 'mysql'
-})
+const app = express()
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.')
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err)
-  })
+app.use(bodyParser.json)
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
+
