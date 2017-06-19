@@ -1,13 +1,22 @@
 
 module.exports = function (sequelize, DataTypes) {
-  var ChildrenDetail = sequelize.define('childrendetail', {
-    nameTh: DataTypes.STRING,
-    nameEng: DataTypes.STRING,
-    nickname: DataTypes.STRING,
-    birthday: DataTypes.DATE,
-    desc: DataTypes.TEXT,
-    imagePath: DataTypes.STRING
+  var ChildrenDetail = sequelize.define('ChildrenDetail', {
+    children_id: DataTypes.INTEGER,
+    date: DataTypes.DATE,
+    calAll: DataTypes.STRING,
+    entryTime: DataTypes.TIME,
+    exitTime: DataTypes.TIME,
+    learning: DataTypes.INTEGER,
+    lunch: DataTypes.INTEGER,
+    medicine: DataTypes.INTEGER,
+    nap: DataTypes.INTEGER,
+    comment: DataTypes.TEXT
+
   })
+
+  ChildrenDetail.associate = (models) => {
+    ChildrenDetail.belongsTo(models.Children, {foreignKey: 'children_id'})
+  }
 
   return ChildrenDetail
 }
