@@ -1,9 +1,10 @@
-const express = require('express')
-var bodyParser = require('body-parser');
+var express = require('express')
+var bodyParser = require('body-parser')
 
-const app = express()
+var app = express()
 
 var childrens = require('./route/childrenRoute')
+var school = require('./route/schoolRoute')
 
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({
@@ -11,6 +12,7 @@ app.use(bodyParser.json())
 // }))
 
 app.use('/', childrens)
+app.use('/', school)
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')

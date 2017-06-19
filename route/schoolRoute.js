@@ -1,4 +1,4 @@
-var models = require('../models/School')
+var models = require('../models')
 var express = require('express')
 var router = express.Router()
 
@@ -17,3 +17,5 @@ router.get('/school/:id', (req, res) => {
     res.json(school)
   })
 })
+
+module.exports = router

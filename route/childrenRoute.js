@@ -1,4 +1,4 @@
-var models = require('../models/Children')
+var models = require('../models')
 var express = require('express')
 var router = express.Router()
 router.get('/children', (req, res) => {

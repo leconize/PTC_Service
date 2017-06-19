@@ -1,6 +1,6 @@
 
 module.exports = function (sequelize, DataTypes) {
-  var Children = sequelize.define('Children', {
+  var ChildrenDetail = sequelize.define('childrendetail', {
     nameTh: DataTypes.STRING,
     nameEng: DataTypes.STRING,
     nickname: DataTypes.STRING,
@@ -9,5 +9,5 @@ module.exports = function (sequelize, DataTypes) {
     imagePath: DataTypes.STRING
   })
 
-  return Children
+  return ChildrenDetail
 }
