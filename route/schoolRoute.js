@@ -18,4 +18,20 @@ router.get('/school/:id', (req, res) => {
   })
 })
 
+router.post('/school', (req, res) => {
+  models.School.create(req.body).then((school) => {
+    res.json(school)
+  })
+})
+
+router.delete('/school/:id', (req, res) => {
+  models.School.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then((data) => {
+    res.json(data)
+  })
+})
+
 module.exports = router
