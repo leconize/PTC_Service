@@ -6,6 +6,8 @@ var app = express()
 var childrens = require('./route/childrenRoute')
 var school = require('./route/schoolRoute')
 var childrenDetails = require('./route/childrenDetailRoute')
+var parent = require('./route/parentRoute')
+var classroom = require('./route/classroomRoute')
 
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({
@@ -15,6 +17,8 @@ app.use(bodyParser.json())
 app.use('/', childrens)
 app.use('/', school)
 app.use('/', childrenDetails)
+app.use('/', parent)
+app.use('/', classroom)
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
