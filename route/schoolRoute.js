@@ -16,6 +16,9 @@ router.get('/school/:id', (req, res) => {
     } else {
       res.json(school)
     }
+  }).catch((error) => {
+    res.status(404)
+    res.send({error: error.name})
   })
 })
 
@@ -33,8 +36,13 @@ router.delete('/school/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then((data) => {
-    res.json(data)
+  }).then((isSuccess) => {
+    if (isSuccess) {
+      res.send('Delete is Successed')
+    } else {
+      res.status(404)
+      res.send({error: 'Not Found'})
+    }
   }).catch((error) => {
     res.status(400)
     res.send({error: error.name})
