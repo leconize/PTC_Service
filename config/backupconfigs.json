@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
+    "password": null,
     "database": "db_ptc",
-    "host": "139.59.227.153",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
