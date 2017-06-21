@@ -3,18 +3,18 @@ var express = require('express')
 var router = express.Router()
 
 router.get('/message', (req, res) => {
-  models.Message.findAll().then((message) => {
+  models.message.findAll().then((message) => {
     res.json(message)
   })
 })
 
 router.get('/message/:id', (req, res) => {
-  models.Message.findById(req.params.id).then((message) => {
+  models.message.findById(req.params.id).then((message) => {
     if (message === null) {
       res.status(404)
       res.send({error: 'Not Found'})
     } else {
-      res.json(school)
+      res.json(message)
     }
   }).catch((error) => {
     res.status(404)
@@ -23,7 +23,7 @@ router.get('/message/:id', (req, res) => {
 })
 
 router.post('/message', (req, res) => {
-  models.Message.create(req.body).then((message) => {
+  models.message.create(req.body).then((message) => {
     res.json(message)
   }).catch((error) => {
     res.status(404)
@@ -32,7 +32,7 @@ router.post('/message', (req, res) => {
 })
 
 router.delete('/message/:id', (req, res) => {
-  models.Message.destroy({
+  models.message.destroy({
     where: {
       id: req.params.id
     }
