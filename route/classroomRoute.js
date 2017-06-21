@@ -8,7 +8,7 @@ router.get('/classroom', (req, res) => {
   })
 })
 
-router.get('/classroom/:id', (res, req) => {
+router.get('/classroom/:id', (req, res) => {
   models.Classroom.findByid(req.params.id).then((classroom) => {
     if (classroom === null){
       res.status(404)
@@ -19,7 +19,7 @@ router.get('/classroom/:id', (res, req) => {
   })
 })
 
-router.post('/classroom', (res, req) => {
+router.post('/classroom', (req, res) => {
   models.Classroom.create(req.body)
     .then((classroom) => {
       res.json(classroom)
@@ -30,7 +30,7 @@ router.post('/classroom', (res, req) => {
     })
 })
 
-router.delete('/classroom/:id', (res, req) => {
+router.delete('/classroom/:id', (req, res) => {
   models.Classroom.destroy({
     where: {
       id: req.params.id
