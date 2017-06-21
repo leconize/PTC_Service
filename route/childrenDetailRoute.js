@@ -37,11 +37,14 @@ router.delete('/detail/:id', (req, res) => {
     }
   }).then((isSuccess) => {
     if (isSuccess) {
-      res.send({})
+      res.send('Delete is successed')
     } else {
       res.status(404)
       res.send({error: 'Resource not found'})
     }
+  }).catch((error) => {
+    res.status(400)
+    res.send({error: error.name})
   })
 })
 

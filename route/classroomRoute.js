@@ -31,7 +31,11 @@ router.post('/classroom', (res, req) => {
 })
 
 router.delete('/classroom/:id', (res, req) => {
-  models.Classroom.destroy(req.params.id)
+  models.Classroom.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
     .then((isSuccess) => {
       if (isSuccess) {
         res.send('Delete is successed')

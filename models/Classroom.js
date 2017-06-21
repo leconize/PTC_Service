@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
   var Classroom = sequelize.define('Classroom', {
-    grade: DataTypes.STRING,
+    grade: DataTypes.INTEGER(11),
     className: DataTypes.STRING
   })
   return Classroom
