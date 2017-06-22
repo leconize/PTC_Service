@@ -6,6 +6,8 @@ module.exports = function (sequelize, DataTypes) {
     birthday: DataTypes.DATE,
     desc: DataTypes.TEXT,
     imagePath: DataTypes.STRING
+  }, {
+    timestamps: false
   })
 
   Children.associate = (models) => {

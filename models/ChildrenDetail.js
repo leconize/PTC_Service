@@ -12,6 +12,8 @@ module.exports = function (sequelize, DataTypes) {
     nap: DataTypes.INTEGER,
     comment: DataTypes.TEXT
 
+  }, {
+    timestamps: false
   })
 
   ChildrenDetail.associate = (models) => {
