@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "unittest" : "./node_modules/.bin/mocha test/unittest/*.test.js"
+    "unittest": "./node_modules/.bin/mocha test/unittest/*.test.js",
+    "integrate" : "./node_modules/.bin/mocha test/integration/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.0.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.3.0",

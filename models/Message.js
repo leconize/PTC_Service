@@ -3,7 +3,6 @@ module.exports = function (sequelize, DataTypes) {
     message: DataTypes.STRING,
     time: DataTypes.TIME,
     isRead: DataTypes.INTEGER
-
   })
 
   return Message
