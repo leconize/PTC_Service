@@ -10,12 +10,12 @@ var parent = require('./route/parentRoute')
 var classroom = require('./route/classroomRoute')
 var message = require('./route/messageRoute')
 var teacher = require('./route/teacherRoute')
-
+var user = require('./route/userRoute')
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({
 //   extended: false
 // }))
-
+app.use('/', user)
 app.use('/', childrens)
 app.use('/', school)
 app.use('/', childrenDetails)
