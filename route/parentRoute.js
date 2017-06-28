@@ -49,4 +49,18 @@ router.delete('/parent/:id', (req, res) => {
   })
 })
 
+router.get('/parent/:id/image', (req, res) => {
+  models.parent.findById(req.params.id).then((parent) => {
+    if (parent === null) {
+      res.status(404)
+      res.send({error: 'Not Found'})
+    } else {
+      res.json(parent)
+    }
+  }).catch((error) => {
+    res.status(404)
+    res.send({error: error.name})
+  })
+})
+
 module.exports = router
