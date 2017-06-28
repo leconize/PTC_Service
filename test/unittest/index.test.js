@@ -11,4 +11,16 @@ describe('this program load model from models/index', function () {
   it('have the Classroom Model', function () {
     expect(models.Classroom).to.be.a('function')
   })
+  it('have the Message Model', function () {
+    expect(models.message).to.be.a('function')
+  })
+  it('have the Classroom Model', function () {
+    expect(models.Classroom).to.be.a('function')
+  })
+  it('have the Classroom Model', function () {
+    expect(models.Classroom).to.be.a('function')
+  })
+  it('have the Classroom Model', function () {
+    expect(models.Classroom).to.be.a('function')
+  })
 })

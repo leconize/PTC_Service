@@ -4,7 +4,6 @@ module.exports = function (sequelize, DataTypes) {
     email: DataTypes.STRING,
     imagePath: DataTypes.STRING,
     password: DataTypes.STRING
-
   }, {
     timestamps: false
   })

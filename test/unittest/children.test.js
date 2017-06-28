@@ -6,7 +6,7 @@ describe('Children Model', function () {
   before(function () {
     var sequelize = require('../../models').sequelize
     sequelize.options.logging = false
-    return require('../../models').sequelize.sync()
+    return sequelize.sync()
   })
 
   beforeEach(function () {

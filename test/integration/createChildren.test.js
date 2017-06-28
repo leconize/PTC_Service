@@ -5,7 +5,7 @@ let describe = require('mocha').describe
 
 let chai = require('chai')
 let chaiHttp = require('chai-http')
-let should = chai.should()
+chai.should()
 
 console.log(chai.should)
 
