@@ -1,9 +1,10 @@
 var models = require('../models')
 var express = require('express')
 var multer = require('multer')
+var fs = require('fs')
 var path = require('path')
 
-var upload = multer({dest: path.join(__dirname, '/tmp')}).any()
+var upload = multer({dest: path.join(__dirname, '/children')}).any()
 
 var router = express.Router()
 router.get('/children', (req, res) => {
@@ -54,11 +55,24 @@ router.get('/children/:id/image', (req, res) => {
 })
 
 router.post('/children/:id/image', (req, res) => {
+  var targetPath = path.resolve(path.join(__dirname, '/children/:id' + '.png'))
   upload(req, res, (err) => {
     if (err) {
       res.status(404)
       res.send({error: err.name})
     } else {
+      if (path.extname(String(req.files.name)).toLowerCase() === '.png') {
+        // fs.rename(upload, targetPath, (err) => {
+        //   if (err) throw err
+        //   console.log('Upload completed!')
+        // })
+        console.log('In condition')
+      } else {
+        fs.unlink(String(upload), () => {
+          if (err) throw err
+          console.error('Only .png files are allowed!')
+        })
+      }
       console.log(req.body, 'Body')
       console.log(req.files, 'files')
       res.send('Successed')
