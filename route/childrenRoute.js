@@ -1,5 +1,10 @@
 var models = require('../models')
 var express = require('express')
+var multer = require('multer')
+var path = require('path')
+
+var upload = multer({dest: path.join(__dirname, '/tmp')}).any()
+
 var router = express.Router()
 router.get('/children', (req, res) => {
   models.Children.findAll().then((children) => {
@@ -45,6 +50,19 @@ router.get('/children/:id/image', (req, res) => {
   }).catch((error) => {
     res.status(404)
     res.send({error: error.name})
+  })
+})
+
+router.post('/children/:id/image', (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      res.status(404)
+      res.send({error: err.name})
+    } else {
+      console.log(req.body, 'Body')
+      console.log(req.files, 'files')
+      res.send('Successed')
+    }
   })
 })
 
