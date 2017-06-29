@@ -4,13 +4,16 @@ var router = express.Router()
 var security = require('../utils/security')
 
 router.get('/user', (req, res) => {
-  models.User.findAll().then((User) => {
-    res.json(User)
+  models.User.findAll({
+    attributes: ['id', 'email', 'role']
+  }).then((user) => {
+    res.json(user)
   })
 })
 
 router.get('/user/:id', (req, res) => {
   models.User.findAll({
+    attributes: ['id', 'email', 'role'],
     where: {
       id: req.params.id
     }
@@ -20,6 +23,7 @@ router.get('/user/:id', (req, res) => {
 })
 
 router.post('/user', (req, res) => {
+  req.body.password = security.encrypt(req.body.password)
   models.User.create(req.body).then((child) => {
     res.json(child)
   })
