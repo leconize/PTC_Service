@@ -4,7 +4,7 @@ var multer = require('multer')
 var fs = require('fs')
 var path = require('path')
 
-var upload = multer({dest: path.join(__dirname, '/children')}).any()
+var upload = multer({ dest: path.join(__dirname, '/children') }).any()
 
 var router = express.Router()
 router.get('/children', (req, res) => {
@@ -44,13 +44,13 @@ router.get('/children/:id/image', (req, res) => {
   models.Children.findById(req.params.id).then((children) => {
     if (children === null) {
       res.status(404)
-      res.send({error: 'Not Found'})
+      res.send({ error: 'Not Found' })
     } else {
       res.json(children)
     }
   }).catch((error) => {
     res.status(404)
-    res.send({error: error.name})
+    res.send({ error: error.name })
   })
 })
 
@@ -59,12 +59,23 @@ router.post('/children/:id/image', (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       res.status(404)
-      res.send({error: err.name})
+      res.send({ error: err.name })
     } else {
-      console.log(req.files[0].originalname)
       if (path.extname(req.files[0].originalname).toLowerCase() === '.png') {
         fs.rename(req.files[0].path, targetPath, (err) => {
           if (err) throw err
+          models.Children.find({ where: { id: req.params.id } }).then((children) => {
+            if (children) {
+              children.updateAttributes({
+                imagePath: targetPath
+              }).catch((error) => {
+                res.send({ error: error.name })
+              })
+            }
+          }).catch((error) => {
+            res.status(404)
+            res.send({ error: error.name })
+          })
           console.log('Upload completed!')
         })
       } else {
