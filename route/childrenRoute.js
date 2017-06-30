@@ -55,18 +55,18 @@ router.get('/children/:id/image', (req, res) => {
 })
 
 router.post('/children/:id/image', (req, res) => {
-  var targetPath = path.resolve(path.join(__dirname, '/children/:id' + '.png'))
+  var targetPath = path.resolve(path.join(__dirname, '/children/' + req.params.id + '.png'))
   upload(req, res, (err) => {
     if (err) {
       res.status(404)
       res.send({error: err.name})
     } else {
-      if (path.extname(String(req.files.name)).toLowerCase() === '.png') {
-        // fs.rename(upload, targetPath, (err) => {
-        //   if (err) throw err
-        //   console.log('Upload completed!')
-        // })
-        console.log('In condition')
+      console.log(req.files[0].originalname)
+      if (path.extname(req.files[0].originalname).toLowerCase() === '.png') {
+        fs.rename(req.files[0].path, targetPath, (err) => {
+          if (err) throw err
+          console.log('Upload completed!')
+        })
       } else {
         fs.unlink(String(upload), () => {
           if (err) throw err
