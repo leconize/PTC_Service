@@ -1,7 +1,8 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var morgan = require('morgan')
-
+var fs = require('fs')
+var path = require('path')
 var app = express()
 
 var childrens = require('./route/childrenRoute')
@@ -12,11 +13,14 @@ var classroom = require('./route/classroomRoute')
 var message = require('./route/messageRoute')
 var teacher = require('./route/teacherRoute')
 var user = require('./route/userRoute')
+
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({
 //   extended: false
 // }))
-app.use(morgan('dev'))
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+app.use(require('express-status-monitor')())
+app.use(morgan('dev', {stream: accessLogStream}))
 app.use('/', user)
 app.use('/', childrens)
 app.use('/', school)
