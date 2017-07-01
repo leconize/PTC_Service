@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+var jwt = require('jsonwebtoken')
 
 function verifyJWTToken (token) {
   return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ function createJWToken (details) {
   }
 
   if (!details.maxAge || typeof details.maxAge !== 'number') {
-    details.maxAge = 3600
+    details.maxAge = 10368000 // four month
   }
 
   if (details.sessionData) {
