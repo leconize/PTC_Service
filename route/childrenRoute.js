@@ -40,54 +40,53 @@ router.delete('/children/:id', (req, res) => {
   })
 })
 
-router.get('/children/:id/image', (req, res) => {
-  models.Children.findById(req.params.id).then((children) => {
-    if (children === null) {
-      res.status(404)
-      res.send({ error: 'Not Found' })
-    } else {
-      res.json(children)
-    }
-  }).catch((error) => {
-    res.status(404)
-    res.send({ error: error.name })
-  })
-})
-
 router.post('/children/:id/image', (req, res) => {
-  var targetPath = path.resolve(path.join(__dirname, '/children/' + req.params.id + '.png'))
+  var fileType = ['.png', '.jpg', '.jpeg']
   upload(req, res, (err) => {
     if (err) {
       res.status(404)
       res.send({ error: err.name })
     } else {
-      if (path.extname(req.files[0].originalname).toLowerCase() === '.png') {
-        fs.rename(req.files[0].path, targetPath, (err) => {
-          if (err) throw err
-          models.Children.find({ where: { id: req.params.id } }).then((children) => {
-            if (children) {
-              children.updateAttributes({
-                imagePath: targetPath
-              }).catch((error) => {
-                res.send({ error: error.name })
-              })
-            }
-          }).catch((error) => {
-            res.status(404)
-            res.send({ error: error.name })
+      var typeError = true
+      // loop check fileType of image
+      for (var i = 0; i < fileType.length; i++) {
+        if (path.extname(req.files[0].originalname).toLowerCase() === fileType[i]) {
+          typeError = false
+          var targetPath = path.join(__dirname, '/children/' + req.params.id + fileType[i])
+          fs.rename(req.files[0].path, targetPath, (err) => {
+            if (err) throw err
+            models.Children.find({ where: { id: req.params.id } }).then((children) => {
+              var updateError = false
+              if (children) {
+                children.updateAttributes({
+                  imagePath: targetPath
+                }).catch((error) => {
+                  updateError = true
+                  res.send({ error: error.name })
+                })
+                if (updateError) res.send('Record path fail!')
+                else res.send('Record path complete!')
+              }
+            }).catch((error) => {
+              res.status(404)
+              res.send({ error: error.name })
+            })
           })
-          console.log('Upload completed!')
-        })
-      } else {
-        fs.unlink(String(upload), () => {
-          if (err) throw err
-          console.error('Only .png files are allowed!')
-        })
+        }
+      }
+      // invalid fileType of image
+      if (typeError) {
+        res.send('Invalid fileType.')
       }
       console.log(req.body, 'Body')
       console.log(req.files, 'files')
-      res.send('Successed')
     }
+  })
+})
+
+router.get('/children/:id/image', (req, res) => {
+  models.Children.find({attributes: ['imagePath']}, {where: {id: req.params.id}}).then((children) => {
+    res.send(children)
   })
 })
 
