@@ -26,10 +26,7 @@ router.get('/user/:id', (req, res) => {
 router.post('/user', (req, res) => {
   req.body.password = security.encrypt(req.body.password)
   models.User.create(req.body).then((user) => {
-    var token = jwt.createJWToken(user)
-    user.password = undefined
-    console.log(user.dataValues)
-    user.dataValues.token = token
+    delete user.dataValues.password
     res.json(user)
   })
 })
