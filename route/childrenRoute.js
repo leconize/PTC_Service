@@ -85,8 +85,8 @@ router.post('/children/:id/image', (req, res) => {
 })
 
 router.get('/children/:id/image', (req, res) => {
-  models.Children.find({attributes: ['imagePath']}, {where: {id: req.params.id}}).then((children) => {
-    res.send(children)
+  models.Children.findById(req.params.id).then((children) => {
+    res.sendfile(children.imagePath)
   })
 })
 
