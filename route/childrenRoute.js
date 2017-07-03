@@ -3,10 +3,9 @@ var express = require('express')
 var multer = require('multer')
 var fs = require('fs')
 var path = require('path')
-
 var upload = multer({ dest: path.join(__dirname, '/children') }).any()
-
 var router = express.Router()
+
 router.get('/children', (req, res) => {
   models.Children.findAll().then((children) => {
     res.json(children)
@@ -86,7 +85,15 @@ router.post('/children/:id/image', (req, res) => {
 
 router.get('/children/:id/image', (req, res) => {
   models.Children.findById(req.params.id).then((children) => {
-    res.sendfile(children.imagePath)
+    if (children === null) {
+      res.status(404)
+      res.send({ error: 'Not Found' })
+    } else {
+      res.sendfile(children.imagePath)
+    }
+  }).catch((error) => {
+    res.status(404)
+    res.send({ error: error.name })
   })
 })
 
