@@ -3,6 +3,7 @@ var express = require('express')
 var multer = require('multer')
 var fs = require('fs')
 var path = require('path')
+var security = require('../utils/security')
 
 var upload = multer({ dest: path.join(__dirname, '/children') }).any()
 
@@ -90,4 +91,18 @@ router.get('/children/:id/image', (req, res) => {
   })
 })
 
+router.get('/children/:id/secretkey', (req, res) => {
+  models.Children.findById(req.params.id).then((children) => {
+    console.log(req.params)
+    var secretKey = security.encrypt('the id is' + req.params.id)
+    res.json(secretKey)
+  })
+})
+
+router.get('/children/validate/:secretkey', (req, res) => {
+  var id = security.decrypt(String(req.params.secretkey)).replace('the id is', '')
+  models.Children.findById(id).then((children) => {
+    res.json(children)
+  })
+})
 module.exports = router

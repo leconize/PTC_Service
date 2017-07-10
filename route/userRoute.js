@@ -23,6 +23,17 @@ router.get('/user/:id', (req, res) => {
   })
 })
 
+router.get('/user/email/:email', (req, res) => {
+  models.User.findAll({
+    attributes: ['id'],
+    where: {
+      email: req.params.email
+    }
+  }).then((user) => {
+    res.json(user)
+  })
+})
+
 router.post('/user', (req, res) => {
   req.body.password = security.encrypt(req.body.password)
   models.User.create(req.body).then((user) => {
@@ -54,12 +65,12 @@ router.post('/user/login', (req, res) => {
         user.dataValues.token = token
         res.json(user)
       } else {
-        res.json({
+        res.status(400).json({
           error: 'wrong password'
         })
       }
     } else {
-      res.json({
+      res.status(400).json({
         error: " can't find user that use this email"
       })
     }
