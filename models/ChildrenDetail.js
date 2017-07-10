@@ -10,7 +10,8 @@ module.exports = function (sequelize, DataTypes) {
     lunch: DataTypes.INTEGER,
     medicine: DataTypes.INTEGER,
     nap: DataTypes.INTEGER,
-    comment: DataTypes.TEXT
+    comment: DataTypes.TEXT,
+    imagePath: DataTypes.STRING
 
   }, {
     timestamps: false
