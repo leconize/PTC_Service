@@ -30,7 +30,13 @@ router.get('/user/email/:email', (req, res) => {
       email: req.params.email
     }
   }).then((user) => {
-    res.json(user)
+    if (user.length) {
+      res.json(user)
+    } else {
+      res.status(404).json({
+        error: 'Record not found'
+      })
+    }
   })
 })
 
