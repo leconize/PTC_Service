@@ -3,7 +3,7 @@ var auth = require('../utils/auth')
 router.all('*', (req, res, next) => {
   console.log(req.path)
   if (req.method === 'OPTIONS' || req.path === '/user/login' || req.path === '/status' ||
-  (req.path === '/user' && req.method === 'POST') || req.path.match('/user/email')) {
+  (req.path === '/user' && req.method === 'POST') || (req.path.match('/user') && req.query.email !== undefined)) {
     next()
   } else {
     var token = req.headers['authorization']
