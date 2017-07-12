@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var morgan = require('morgan')
+var https = require('https')
 var fs = require('fs')
 var path = require('path')
 var app = express()
@@ -34,6 +35,11 @@ app.use('/', classroom)
 app.use('/', message)
 app.use('/', teacher)
 app.use(morgan('dev'))
+const option = {
+  cert: fs.readFileSync('./ssl-key/fullchain.pem'),
+  key: fs.readFileSync('./ssl-key/privkey.pem')
+}
+https.createServer(option, app).listen(4000)
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
