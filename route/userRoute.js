@@ -5,10 +5,20 @@ var security = require('../utils/security')
 var jwt = require('../utils/auth')
 
 router.get('/user', (req, res) => {
+  console.log(req.query)
   models.User.findAll({
-    attributes: ['id', 'email', 'role']
+    attributes: ['id', 'email', 'role'],
+    where: req.query
   }).then((user) => {
-    res.json(user)
+    if (user.length === 0) {
+      res.status(404).json(
+        { error: 'Record not found'
+        })
+    } else {
+      res.json(user)
+    }
+  }).catch((error) => {
+    res.status(400).json({error: error.name})
   })
 })
 
@@ -20,23 +30,6 @@ router.get('/user/:id', (req, res) => {
     }
   }).then((child) => {
     res.json(child)
-  })
-})
-
-router.get('/user/email/:email', (req, res) => {
-  models.User.findAll({
-    attributes: ['id'],
-    where: {
-      email: req.params.email
-    }
-  }).then((user) => {
-    if (user.length) {
-      res.json(user)
-    } else {
-      res.status(404).json({
-        error: 'Record not found'
-      })
-    }
   })
 })
 
