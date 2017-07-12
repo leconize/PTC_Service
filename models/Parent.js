@@ -5,7 +5,8 @@ module.exports = function (sequelize, DataTypes) {
     imagePath: DataTypes.STRING,
     password: DataTypes.STRING,
     firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING
+    lastname: DataTypes.STRING,
+    phoneNumber: DataTypes.INTEGER
   }, {
     timestamps: false
   })
