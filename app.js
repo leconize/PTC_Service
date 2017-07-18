@@ -15,6 +15,7 @@ var message = require('./route/messageRoute')
 var teacher = require('./route/teacherRoute')
 var user = require('./route/userRoute')
 var auth = require('./route/jwtMiddleware')
+var verifyRoute = require('./route/validateRoute')
 
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({
@@ -34,6 +35,7 @@ app.use('/', parent)
 app.use('/', classroom)
 app.use('/', message)
 app.use('/', teacher)
+app.use('/', verifyRoute)
 app.use(morgan('dev'))
 const option = {
   cert: fs.readFileSync('./ssl-key/fullchain.pem'),
