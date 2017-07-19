@@ -4,30 +4,46 @@ var models = require('../models')
 
 router.get('/children/:id/secretkey', (req, res) => {
   models.Children.findById(req.params.id).then((children) => {
-    var secretKey = security.encrypt('children id is' + req.params.id)
+    var secretKey = security.encrypt('c' + req.params.id)
     res.json(secretKey)
   })
 })
 
 router.get('/classroom/:id/secretkey', (req, res) => {
   models.Classroom.findById(req.params.id).then((classroom) => {
-    var secretKey = security.encrypt('classroom id is' + req.params.id)
+    var secretKey = security.encrypt('C' + req.params.id)
     res.json(secretKey)
   })
 })
 
 router.get('/validate/:secretkey', (req, res) => {
-  var decryptText = security.decrypt(String(req.params.secretKey))
+  var decryptText = security.decrypt(String(req.params.secretkey))
   var id = null
-  if (decryptText.indexOf('children') !== 1) {
-    id = decryptText.replace('children  id is', '')
+  console.log(decryptText)
+  console.log(decryptText.indexOf('children'))
+  if (decryptText.indexOf('children') !== -1) {
+    id = decryptText.replace('children', '')
     models.Children.findById(id).then((children) => {
-      res.json(children)
+      if (children) {
+        res.json({
+          data: children,
+          type: 'children'}
+        )
+      } else {
+        res.status(400).json({error: 'secretkey error'})
+      }
     })
-  } else if (decryptText.indexOf('classroom') !== 1) {
-    id = decryptText.replace('classroom id is', '')
+  } else if (decryptText.indexOf('classroom') !== -1) {
+    id = decryptText.replace('classroom', '')
     models.Classroom.findById(id).then((classroom) => {
-      res.json(classroom)
+      if (classroom) {
+        res.json({
+          data: classroom,
+          type: 'classroom'
+        })
+      } else {
+        res.status(400).json({error: 'secretkey error'})
+      }
     })
   } else {
     res.status(400).json({
