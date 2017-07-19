@@ -20,9 +20,8 @@ router.get('/validate/:secretkey', (req, res) => {
   var decryptText = security.decrypt(String(req.params.secretkey))
   var id = null
   console.log(decryptText)
-  console.log(decryptText.indexOf('children'))
-  if (decryptText.indexOf('children') !== -1) {
-    id = decryptText.replace('children', '')
+  if (decryptText.charAt(0) === 'c') {
+    id = decryptText.substring(1)
     models.Children.findById(id).then((children) => {
       if (children) {
         res.json({
@@ -33,8 +32,8 @@ router.get('/validate/:secretkey', (req, res) => {
         res.status(400).json({error: 'secretkey error'})
       }
     })
-  } else if (decryptText.indexOf('classroom') !== -1) {
-    id = decryptText.replace('classroom', '')
+  } else if (decryptText.charAt(0) === 'C') {
+    id = decryptText.substring(1)
     models.Classroom.findById(id).then((classroom) => {
       if (classroom) {
         res.json({

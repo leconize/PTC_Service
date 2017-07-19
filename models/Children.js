@@ -1,11 +1,14 @@
 module.exports = function (sequelize, DataTypes) {
   var Children = sequelize.define('Children', {
-    nameTh: DataTypes.STRING,
-    nameEng: DataTypes.STRING,
+    firstname: DataTypes.STRING,
+    lastname: DataTypes.STRING,
     nickname: DataTypes.STRING,
     birthday: DataTypes.DATE,
     desc: DataTypes.TEXT,
-    imagePath: DataTypes.STRING
+    imagePath: DataTypes.STRING,
+    studentId: DataTypes.STRING,
+    allergy: DataTypes.STRING,
+    bloodgroup: DataTypes.STRING
   }, {
     timestamps: false
   })
