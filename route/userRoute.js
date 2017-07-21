@@ -34,11 +34,33 @@ router.get('/user/:id', (req, res) => {
 })
 
 router.post('/user', (req, res) => {
-  req.body.password = security.encrypt(req.body.password)
-  models.User.create(req.body).then((user) => {
-    delete user.dataValues.password
-    res.json(user)
-  })
+  req.body.user.password = security.encrypt(req.body.user.password)
+  console.log(req.body)
+  if (req.body.user.role === 'teacher') {
+    models.User.create(req.body.user).then((user) => {
+      req.body.data.userid = user.id
+      models.teacher.create(req.body.data).then((teacher) => {
+        delete user.dataValues.password
+        res.json(user)
+      })
+    }).catch((error) => {
+      res.status(400).json(error)
+    })
+  } else if (req.body.user.role === 'parent') {
+    models.User.create(req.body.user).then((user) => {
+      req.body.data.userid = user.id
+      models.parent.create(req.body.data).then((parent) => {
+        let id = req.body.children.id
+        delete req.body.children.id
+        models.Children.update(req.body.children, {where: {id: id}}).then((children) => {
+          delete user.dataValues.password
+          res.json(user)
+        })
+      })
+    }).catch((error) => {
+      res.status(400).json(error)
+    })
+  }
 })
 
 router.delete('/user/:id', (req, res) => {
