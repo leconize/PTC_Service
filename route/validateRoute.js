@@ -17,9 +17,12 @@ router.get('/classroom/:id/secretkey', (req, res) => {
 })
 
 router.get('/validate/:secretkey', (req, res) => {
-  var decryptText = security.decrypt(String(req.params.secretkey))
+  try {
+    var decryptText = security.decrypt(String(req.params.secretkey))
+  } catch (error) {
+    res.status(400).json({error: 'secretkey error'})
+  }
   var id = null
-  console.log(decryptText)
   if (decryptText.charAt(0) === 'c') {
     id = decryptText.substring(1)
     models.Children.findById(id).then((children) => {
