@@ -8,7 +8,8 @@ module.exports = function (sequelize, DataTypes) {
     imagePath: DataTypes.STRING,
     studentId: DataTypes.STRING,
     allergy: DataTypes.STRING,
-    bloodgroup: DataTypes.STRING
+    bloodgroup: DataTypes.STRING,
+    secretCode: DataTypes.STRING
   }, {
     timestamps: false
   })

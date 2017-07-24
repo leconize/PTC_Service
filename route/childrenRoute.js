@@ -3,6 +3,7 @@ var express = require('express')
 var multer = require('multer')
 var fs = require('fs')
 var path = require('path')
+var security = require('./../utils/security')
 
 var upload = multer({ dest: path.join(__dirname, '/children') }).any()
 var router = express.Router()
@@ -26,7 +27,13 @@ router.get('/children/:id', (req, res) => {
 
 router.post('/children', (req, res) => {
   models.Children.create(req.body).then((child) => {
-    res.json(child)
+    child.update({secretCode: security.encrypt('c' + child.id)}, {
+      where: {
+        id: child.id
+      }
+    }).then((child) => {
+      res.json(child)
+    })
   })
 })
 

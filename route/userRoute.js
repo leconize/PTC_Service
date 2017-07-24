@@ -5,7 +5,6 @@ var security = require('../utils/security')
 var jwt = require('../utils/auth')
 
 router.get('/user', (req, res) => {
-  console.log(req.query)
   models.User.findAll({
     attributes: ['id', 'email', 'role'],
     where: req.query
