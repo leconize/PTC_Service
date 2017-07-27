@@ -4,9 +4,21 @@ module.exports = function (sequelize, DataTypes) {
     lastname: DataTypes.STRING,
     phoneNumber: DataTypes.INTEGER,
     userid: DataTypes.INTEGER,
-    classid: DataTypes.INTEGER
+    classid: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      reference: {
+        models: 'Classroom',
+        key: 'id',
+        as: 'classid'
+      }}
   }, {
     timestamps: false
   })
+
+  Teacher.associate = (models) => {
+    Teacher.belongsTo(models.Classroom, {foreignKey: 'classid', targetKey: 'id'})
+  }
+
   return Teacher
 }

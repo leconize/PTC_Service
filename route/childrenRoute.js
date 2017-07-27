@@ -9,12 +9,20 @@ var upload = multer({ dest: path.join(__dirname, '/children') }).any()
 var router = express.Router()
 
 router.get('/children', (req, res) => {
-  models.Children.findAll().then((children) => {
-    res.json(children)
-  })
+  var id = req.decodeToken.data.id
+  if (req.decodeToken.data.role === 'teacher') {
+    models.teacher.findOne({attributes: ['classid'], where: {userid: id}}).then((teacher) => {
+      models.Children.findAll({where: {classid: teacher.classid}}).then((children) => {
+        res.json(children)
+      })
+    })
+  } else {
+    models.Children.findAll().then((children) => {
+      res.json(children)
+    })
+  }
 })
 
-// /children/3
 router.get('/children/:id', (req, res) => {
   models.Children.findAll({
     where: {

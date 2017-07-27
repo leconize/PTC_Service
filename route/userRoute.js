@@ -79,7 +79,8 @@ router.post('/user/login', (req, res) => {
     }
   }).then((user) => {
     if (user) {
-      var token = jwt.createJWToken(user)
+      const jwtData = {sessionData: user.dataValues}
+      var token = jwt.createJWToken(jwtData)
       if (security.decrypt(user.dataValues.password) === req.body.password) {
         delete user.dataValues.password
         user.dataValues.token = token

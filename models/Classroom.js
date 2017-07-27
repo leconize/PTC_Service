@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
 
   Classroom.associate = (models) => {
     Classroom.hasMany(models.Children, {foreignKey: 'classid', sourceKey: 'id'})
+    Classroom.hasMany(models.teacher, {foreignKey: 'classid', sourceKey: 'id'})
   }
   return Classroom
 }
