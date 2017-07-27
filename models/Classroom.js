@@ -5,5 +5,9 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     timestamps: false
   })
+
+  Classroom.associate = (models) => {
+    Classroom.hasMany(models.Children, {foreignKey: 'classid', sourceKey: 'id'})
+  }
   return Classroom
 }

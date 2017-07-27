@@ -25,7 +25,8 @@ router.get('/validate/:secretkey', (req, res) => {
   var id = null
   if (decryptText.charAt(0) === 'c') {
     id = decryptText.substring(1)
-    models.Children.findById(id).then((children) => {
+    models.Children.findById(id, {attributes: ['id', 'nickname'],
+      include: [models.Classroom]}).then((children) => {
       if (children) {
         res.json({
           data: children,
@@ -37,7 +38,7 @@ router.get('/validate/:secretkey', (req, res) => {
     })
   } else if (decryptText.charAt(0) === 'C') {
     id = decryptText.substring(1)
-    models.Classroom.findById(id).then((classroom) => {
+    models.Classroom.findById(id, {includes: [models.Children]}).then((classroom) => {
       if (classroom) {
         res.json({
           data: classroom,
