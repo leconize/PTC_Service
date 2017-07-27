@@ -46,19 +46,25 @@ router.post('/user', (req, res) => {
       res.status(400).json(error)
     })
   } else if (req.body.user.role === 'parent') {
-    models.User.create(req.body.user).then((user) => {
-      req.body.data.userid = user.id
-      models.parent.create(req.body.data).then((parent) => {
-        let id = req.body.children.id
-        delete req.body.children.id
-        models.Children.update(req.body.children, {where: {id: id}}).then((children) => {
-          delete user.dataValues.password
-          res.json(user)
+    return models.sequelize.transaction((transaction) => {
+      return models.User.create(req.body.user, {transaction: transaction}).then((user) => {
+        req.body.data.userid = user.id
+        return models.parent.create(req.body.data, {transaction: transaction}).then((parent) => {
+          let id = req.body.children.id
+          delete req.body.children.id
+          return models.Children.update(req.body.children, {where: {id: id}, transaction: transaction}).then((children) => {
+            delete user.dataValues.password
+            return user
+          })
         })
       })
-    }).catch((error) => {
-      res.status(400).json(error)
     })
+      .then((result) => {
+        res.json(result)
+      }).catch((error) => {
+        console.log(error)
+        res.status(400).json(error)
+      })
   }
 })
 
