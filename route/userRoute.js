@@ -90,7 +90,23 @@ router.post('/user/login', (req, res) => {
       if (security.decrypt(user.dataValues.password) === req.body.password) {
         delete user.dataValues.password
         user.dataValues.token = token
-        res.json(user)
+        let payload = {user: user.dataValues}
+        console.log(user.dataValues)
+        if (user.dataValues.role === 'parent') {
+          models.parent.findOne({where: {userid: user.dataValues.id}}).then((parent) => {
+            payload['data'] = parent.dataValues
+            res.json(payload)
+          }).catch(() => {
+            res.status(400).json({error: 'user not found'})
+          })
+        } else if (user.dataValues.role === 'teacher') {
+          models.teacher.findOne({where: {userid: user.dataValues.id}}).then((teacher) => {
+            payload['data'] = teacher.dataValues
+            res.json(payload)
+          }).catch(() => {
+            res.status(400).json({error: 'user not found'})
+          })
+        }
       } else {
         res.status(400).json({
           error: 'wrong password'
