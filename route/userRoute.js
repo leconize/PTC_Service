@@ -99,7 +99,7 @@ router.post('/user/login', (req, res) => {
             res.status(400).json({error: 'user not found'})
           })
         } else if (user.dataValues.role === 'teacher') {
-          models.teacher.findOne({where: {userid: user.dataValues.id}}).then((teacher) => {
+          models.teacher.findOne({where: {userid: user.dataValues.id}, include: [{model: models.Classroom}]}).then((teacher) => {
             payload['data'] = teacher.dataValues
             res.json(payload)
           }).catch(() => {
