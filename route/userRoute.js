@@ -51,7 +51,6 @@ router.post('/user', (req, res) => {
         req.body.data.userid = user.id
         return models.parent.create(req.body.data, {transaction: transaction}).then((parent) => {
           let id = req.body.children.id
-          delete req.body.children.id
           return models.Children.update(req.body.children, {where: {id: id}, transaction: transaction}).then((children) => {
             delete user.dataValues.password
             return user

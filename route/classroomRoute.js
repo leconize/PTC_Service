@@ -9,7 +9,7 @@ router.get('/classroom', (req, res) => {
 })
 
 router.get('/classroom/:id', (req, res) => {
-  models.Classroom.findByid(req.params.id).then((classroom) => {
+  models.Classroom.findById(req.params.id).then((classroom) => {
     if (classroom === null) {
       res.status(404)
       res.send({error: 'Not Found'})
