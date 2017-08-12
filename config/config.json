@@ -4,7 +4,13 @@
     "password": "password",
     "database": "db_ptc",
     "host": "139.59.227.153",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "idle": 20000,
+      "acquire": 20000
+    }
   },
   "test": {
     "username": "root",
