@@ -76,8 +76,8 @@ router.post('/detail/:id/image', (req, res) => {
                   updateError = true
                   res.send({ error: error.name })
                 })
-                if (updateError) res.json('Record path fail!')
-                else res.json('Record path complete!')
+                if (updateError) res.json('Record path fail')
+                else res.json('Record path complete')
               }
             }).catch((error) => {
               res.status(404)

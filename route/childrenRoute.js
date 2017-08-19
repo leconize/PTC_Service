@@ -79,8 +79,8 @@ router.post('/children/:id/image', (req, res) => {
                   updateError = true
                   res.json({ error: error.name })
                 })
-                if (updateError) res.json({status: 'Record path fail!'})
-                else res.json({status: 'Record path complete!'})
+                if (updateError) res.json({status: 'Record path fail'})
+                else res.json({status: 'Record path complete'})
               }
             }).catch((error) => {
               res.status(404)
@@ -91,7 +91,7 @@ router.post('/children/:id/image', (req, res) => {
       }
       // invalid fileType of image
       if (typeError) {
-        res.json({error: 'Invalid fileType.'})
+        res.json({error: 'Invalid fileType'})
       }
       console.log(req.body, 'Body')
       console.log(req.files, 'files')
