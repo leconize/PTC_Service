@@ -60,7 +60,7 @@ router.post('/children/:id/image', (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       res.status(404)
-      res.send({ error: err.name })
+      res.json({ error: err.name })
     } else {
       var typeError = true
       // loop check fileType of image
@@ -77,21 +77,21 @@ router.post('/children/:id/image', (req, res) => {
                   imagePath: targetPath
                 }).catch((error) => {
                   updateError = true
-                  res.send({ error: error.name })
+                  res.json({ error: error.name })
                 })
-                if (updateError) res.send('Record path fail!')
-                else res.send('Record path complete!')
+                if (updateError) res.json({status: 'Record path fail!'})
+                else res.json({status: 'Record path complete!'})
               }
             }).catch((error) => {
               res.status(404)
-              res.send({ error: error.name })
+              res.json({ error: error.name })
             })
           })
         }
       }
       // invalid fileType of image
       if (typeError) {
-        res.send('Invalid fileType.')
+        res.json({error: 'Invalid fileType.'})
       }
       console.log(req.body, 'Body')
       console.log(req.files, 'files')
@@ -103,13 +103,13 @@ router.get('/children/:id/image', (req, res) => {
   models.Children.findById(req.params.id).then((children) => {
     if (children === null) {
       res.status(404)
-      res.send({ error: 'Not Found' })
+      res.json({ error: 'Not Found' })
     } else {
       res.sendfile(children.imagePath)
     }
   }).catch((error) => {
     res.status(404)
-    res.send({ error: error.name })
+    res.json({ error: error.name })
   })
 })
 

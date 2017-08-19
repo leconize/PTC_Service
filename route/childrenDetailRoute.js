@@ -76,19 +76,19 @@ router.post('/detail/:id/image', (req, res) => {
                   updateError = true
                   res.send({ error: error.name })
                 })
-                if (updateError) res.send('Record path fail!')
-                else res.send('Record path complete!')
+                if (updateError) res.json('Record path fail!')
+                else res.json('Record path complete!')
               }
             }).catch((error) => {
               res.status(404)
-              res.send({ error: error.name })
+              res.json({ error: error.name })
             })
           })
         }
       }
       // invalid fileType of image
       if (typeError) {
-        res.send('Invalid fileType.')
+        res.json('Invalid fileType.')
       }
       console.log(req.body, 'Body')
       console.log(req.files, 'files')
